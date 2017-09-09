@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         images = (RecyclerView)findViewById(R.id.list_images);
         images.setAdapter(new FlickrAdapter(null));
-        images.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        images.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
     }
 
     @Override
