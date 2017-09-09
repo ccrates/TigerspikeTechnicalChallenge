@@ -21,4 +21,8 @@ public class FlickrAuthor {
 
     @Element(name = "buddyicon")
     private String flickrBuddyIcon;
+
+    public String getFlickrNSID() {
+        return flickrNSID;
+    }
 }

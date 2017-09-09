@@ -18,4 +18,12 @@ public class FlickrLink {
 
     @Attribute
     private String href;
+
+    public String getType() {
+        return type;
+    }
+
+    public String getHref() {
+        return href;
+    }
 }

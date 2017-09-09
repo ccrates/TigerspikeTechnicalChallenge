@@ -45,4 +45,12 @@ public class FlickrEntry {
 
     @Element(name = "displaycategories")
     private String displayCategories;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<FlickrLink> getLinks() {
+        return links;
+    }
 }
