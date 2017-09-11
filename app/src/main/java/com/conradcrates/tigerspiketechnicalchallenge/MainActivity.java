@@ -14,6 +14,7 @@ import com.conradcrates.tigerspiketechnicalchallenge.flickr.FlickrRestHandler;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView images;
+    private boolean refreshFeed = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +22,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         images = (RecyclerView)findViewById(R.id.list_images);
-        images.setAdapter(new FlickrAdapter(null));
         images.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+
+        if(savedInstanceState != null){
+            refreshFeed = false;
+            images.setAdapter(new FlickrAdapter(FlickrRestHandler.getCurrentFeed()));
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        FlickrRestHandler.getFlickrFeed(new FlickrCallback() {
-            @Override
-            public void onResponse(FlickrFeed flickrFeed) {
-                images.setAdapter(new FlickrAdapter(flickrFeed));
-            }
-        });
+        if(refreshFeed) {
+            FlickrRestHandler.getFlickrFeed(new FlickrCallback() {
+                @Override
+                public void onResponse(FlickrFeed flickrFeed) {
+                    images.setAdapter(new FlickrAdapter(flickrFeed));
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        refreshFeed = true;
     }
 }

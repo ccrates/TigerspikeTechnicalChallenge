@@ -14,10 +14,13 @@ import retrofit2.Response;
 
 public class FlickrRestHandler {
 
+    private static FlickrFeed feed;
+
     public static void getFlickrFeed(final FlickrCallback callback) {
         RestClientFactory.getInstance().getRestClient().getFeed().enqueue(new Callback<FlickrFeed>() {
             @Override
             public void onResponse(Call<FlickrFeed> call, Response<FlickrFeed> response) {
+                feed = response.body();
                 if(callback != null){
                     callback.onResponse(response.body());
                 }
@@ -28,5 +31,9 @@ public class FlickrRestHandler {
                 Log.e("", t.getLocalizedMessage());
             }
         });
+    }
+
+    public static FlickrFeed getCurrentFeed(){
+        return feed;
     }
 }
